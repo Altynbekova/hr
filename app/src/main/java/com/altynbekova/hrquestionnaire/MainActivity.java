@@ -1,13 +1,11 @@
 package com.altynbekova.hrquestionnaire;
 
 import android.os.Bundle;
-
-import com.google.android.material.snackbar.Snackbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.CheckBox;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.view.View;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -15,13 +13,11 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.altynbekova.hrquestionnaire.databinding.ActivityMainBinding;
 
-import android.view.Menu;
-import android.view.MenuItem;
-
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private int points;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,20 +28,19 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.toolbar);
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAnchorView(R.id.fab)
-                        .setAction("Action", null).show();
-            }
+        CheckBox experienceCheckBox = findViewById(R.id.experience);
+        experienceCheckBox.setOnClickListener(v -> {
+            handleCheckBox(experienceCheckBox, 2);
         });
     }
 
+    private void handleCheckBox(CheckBox checkBox, int pointsValue){
+        if (checkBox.isChecked()) {
+            points += pointsValue;
+        } else {
+            points -= pointsValue;
+        }
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
