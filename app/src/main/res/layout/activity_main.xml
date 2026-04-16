@@ -192,6 +192,34 @@
                     android:text="9"/>
             </RadioGroup>
 
+            <CheckBox
+                android:id="@+id/experience"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Опыт работы от 2 лет"/>
+            <CheckBox
+                android:id="@+id/skills"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Навыки командной разработки"/>
+            <CheckBox
+                android:id="@+id/businessTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Готовность к командировкам"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Сдать тест"/>
+            
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
