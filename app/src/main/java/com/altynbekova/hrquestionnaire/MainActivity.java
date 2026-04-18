@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private TextView result;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         CheckBox businessTrip = findViewById(R.id.businessTrip);
         EditText age = findViewById(R.id.age);
         Slider salary = findViewById(R.id.salary);
+        result = findViewById(R.id.result);
         List<RadioButton> radioButtons = List.of(
                 answer1, answer2, answer3,
                 answer4, answer5
@@ -54,21 +56,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.submit).setOnClickListener(v -> {
             int candidateAge = Integer.parseInt(age.getText().toString());
             int candidateSalary = (int)salary.getValue();
-            TextView result = findViewById(R.id.result);
             result.setVisibility(TextView.VISIBLE);
 
-//            validateInputs(candidateAge, salary);
-            if(candidateAge < 21 || candidateAge>40){
-                result.setText("Вы не подошли по критерию Возраст");
-                return;
-            }
-            if(candidateSalary < 800 || candidateSalary>1600){
-                result.setText("Вы не подошли по критерию Зарплата");
-                return;
-            }
+            boolean valid = validateInputs(candidateAge, candidateSalary);
+            if (!valid) return;
 
             int points = 0;
-
             for (RadioButton rb : radioButtons) {
                 if (rb.isChecked()) points += 2;
             }
@@ -105,6 +98,19 @@ public class MainActivity extends AppCompatActivity {
         fio.addTextChangedListener(textWatcher);
         age.addTextChangedListener(textWatcher);
 
+    }
+
+    private boolean validateInputs(int age, int salary) {
+        boolean valid = true;
+        if(age < 21 || age>40){
+            result.append("Вы не подошли по критерию Возраст");
+            valid = false;
+        }
+        if(salary < 800 || salary>1600){
+            result.append("\nВы не подошли по критерию Зарплата");
+            valid = false;
+        }
+        return valid;
     }
 
 
