@@ -25,9 +25,10 @@ import java.util.OptionalInt;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String EMPTY_STRING = "";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
-    private TextView result;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,26 +38,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.toolbar);
-        RadioButton answer1 = findViewById(R.id.answer1);
-        RadioButton answer2 = findViewById(R.id.answer2);
-        RadioButton answer3 = findViewById(R.id.answer3);
-        RadioButton answer4 = findViewById(R.id.answer4);
-        RadioButton answer5 = findViewById(R.id.answer5);
-        CheckBox experience = findViewById(R.id.experience);
-        CheckBox skills = findViewById(R.id.skills);
-        CheckBox businessTrip = findViewById(R.id.businessTrip);
-        EditText age = findViewById(R.id.age);
-        Slider salary = findViewById(R.id.salary);
-        result = findViewById(R.id.result);
         List<RadioButton> radioButtons = List.of(
-                answer1, answer2, answer3,
-                answer4, answer5
+                binding.answer1, binding.answer2, binding.answer3,
+                binding.answer4, binding.answer5
         );
 
-        findViewById(R.id.submit).setOnClickListener(v -> {
-            int candidateAge = Integer.parseInt(age.getText().toString());
-            int candidateSalary = (int)salary.getValue();
-            result.setVisibility(TextView.VISIBLE);
+        binding.submit.setOnClickListener(v -> {
+            int candidateAge = Integer.parseInt(binding.age.getText().toString());
+            int candidateSalary = (int)binding.salary.getValue();
+            binding.result.setVisibility(TextView.VISIBLE);
+            binding.result.setText(EMPTY_STRING);
 
             boolean valid = validateInputs(candidateAge, candidateSalary);
             if (!valid) return;
@@ -66,17 +57,16 @@ public class MainActivity extends AppCompatActivity {
                 if (rb.isChecked()) points += 2;
             }
 
-            if (experience.isChecked()) points += 2;
-            if (skills.isChecked()) points += 1;
-            if (businessTrip.isChecked()) points += 1;
+            if (binding.experience.isChecked()) points += 2;
+            if (binding.skills.isChecked()) points += 1;
+            if (binding.businessTrip.isChecked()) points += 1;
             if (points >= 10) {
-                result.setText("Свяжитесь с нами по почте hr@example.com");
+                binding.result.setText("Свяжитесь с нами по почте hr@example.com");
             } else {
-                result.setText("Попробуйте еще раз!");
+                binding.result.setText("Попробуйте еще раз!");
             }
         });
 
-        EditText fio = findViewById(R.id.fio);
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {
@@ -88,26 +78,26 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (fio.getText().toString().isBlank() || age.getText().toString().isBlank()) {
+                if (binding.fio.getText().toString().isBlank() || binding.age.getText().toString().isBlank()) {
                     findViewById(R.id.submit).setEnabled(false);
                 } else {
                     findViewById(R.id.submit).setEnabled(true);
                 }
             }
         };
-        fio.addTextChangedListener(textWatcher);
-        age.addTextChangedListener(textWatcher);
+        binding.fio.addTextChangedListener(textWatcher);
+        binding.age.addTextChangedListener(textWatcher);
 
     }
 
     private boolean validateInputs(int age, int salary) {
         boolean valid = true;
         if(age < 21 || age>40){
-            result.append("Вы не подошли по критерию Возраст");
+            binding.result.append("Вы не подошли по критерию Возраст");
             valid = false;
         }
         if(salary < 800 || salary>1600){
-            result.append("\nВы не подошли по критерию Зарплата");
+            binding.result.append("\nВы не подошли по критерию Зарплата");
             valid = false;
         }
         return valid;
