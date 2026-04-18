@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String EMPTY_STRING = "";
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+    private TextView result;
 
 
     @Override
@@ -46,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
         binding.submit.setOnClickListener(v -> {
             int candidateAge = Integer.parseInt(binding.age.getText().toString());
             int candidateSalary = (int)binding.salary.getValue();
-            binding.result.setVisibility(TextView.VISIBLE);
-            binding.result.setText(EMPTY_STRING);
+            result.setVisibility(TextView.VISIBLE);
+            result.setText(EMPTY_STRING);
 
             boolean valid = validateInputs(candidateAge, candidateSalary);
             if (!valid) return;
@@ -61,9 +62,9 @@ public class MainActivity extends AppCompatActivity {
             if (binding.skills.isChecked()) points += 1;
             if (binding.businessTrip.isChecked()) points += 1;
             if (points >= 10) {
-                binding.result.setText("Свяжитесь с нами по почте hr@example.com");
+                result.setText("Свяжитесь с нами по почте hr@example.com");
             } else {
-                binding.result.setText("Попробуйте еще раз!");
+                result.setText("Попробуйте еще раз!");
             }
         });
 
@@ -78,11 +79,20 @@ public class MainActivity extends AppCompatActivity {
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                boolean enabled = true;
                 if (binding.fio.getText().toString().isBlank() || binding.age.getText().toString().isBlank()) {
-                    findViewById(R.id.submit).setEnabled(false);
-                } else {
-                    findViewById(R.id.submit).setEnabled(true);
+                    enabled = false;
                 }
+
+                if (binding.fio.getText().toString().isBlank()) {
+                    binding.layoutFio.setError("ФИО не может быть пустым");
+                }
+
+                if (binding.age.getText().toString().isBlank()) {
+                    binding.layoutAge.setError("Возраст не может быть пустым");
+                }
+
+                findViewById(R.id.submit).setEnabled(enabled);
             }
         };
         binding.fio.addTextChangedListener(textWatcher);
@@ -93,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean validateInputs(int age, int salary) {
         boolean valid = true;
         if(age < 21 || age>40){
-            binding.result.append("Вы не подошли по критерию Возраст");
+            result.append("Вы не подошли по критерию Возраст");
             valid = false;
         }
         if(salary < 800 || salary>1600){
-            binding.result.append("\nВы не подошли по критерию Зарплата");
+            result.append("\nВы не подошли по критерию Зарплата");
             valid = false;
         }
         return valid;
