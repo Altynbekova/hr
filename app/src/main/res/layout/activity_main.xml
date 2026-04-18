@@ -74,6 +74,7 @@
                     android:layout_height="wrap_content"
                     android:text="7"/>
                 <RadioButton
+                    android:id="@+id/answer1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="8"/>
@@ -95,6 +96,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <RadioButton
+                    android:id="@+id/answer2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6"/>
@@ -122,6 +124,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <RadioButton
+                    android:id="@+id/answer3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6"/>
@@ -149,6 +152,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <RadioButton
+                    android:id="@+id/answer4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6"/>
@@ -176,6 +180,7 @@
                 android:orientation="horizontal"
                 android:gravity="center">
                 <RadioButton
+                    android:id="@+id/answer5"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="6"/>
@@ -215,12 +220,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Сдать тест"
-                android:clickable="false"/>
+                android:enabled="false"/>
+                <!--android:visibility="invisible" />-->
             
             <TextView
                 android:id="@+id/result"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_marginBottom="50dp"/>
 
 
         </LinearLayout>
